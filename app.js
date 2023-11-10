@@ -8,13 +8,13 @@ const port = 3000;
 
 app.use(bodyParser.json());
 
-app.post('/sumar-puntos/:passUid', async (req, res) => {
+app.get('/sumar-puntos/:pass_id', async (req, res) => {
     try {
-        const passUid = req.params.passUid;
-        const apiUrl = `https://app.passcreator.com/api/pass/${passUid}?zapierStyle=true`;
+        const passId = req.params.pass_id;
+        const apiUrl = `https://sandwitchez-scanner-poc-backend.vercel.app/?campo=${passId}`;
         const apiKey = process.env.API_KEY;
 
-        const response = await axios.post(apiUrl, req.body, {
+        const response = await axios.get(apiUrl, {
             headers: {
                 'Authorization': apiKey,
                 'Content-Type': 'application/json'
@@ -23,7 +23,7 @@ app.post('/sumar-puntos/:passUid', async (req, res) => {
 
         res.status(response.status).json(response.data);
     } catch (error) {
-        console.error('Error en la llamada POST:', error.message);
+        console.error('Error en la llamada GET:', error.message);
         res.status(500).send('Error interno del servidor');
     }
 });
