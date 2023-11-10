@@ -21,7 +21,7 @@ app.get('/sumar-puntos/:pass_id', async (req, res) => {
                 'Authorization': apiKey,
                 'Content-Type': 'application/json'
             },
-            params: { storedValue:storedValue } // Pasa el campo storedValue como parámetro
+            params: { "storedValue":storedValue } // Pasa el campo storedValue como parámetro
 
         });
         // Devuelve el código de estado y el cuerpo de la respuesta
