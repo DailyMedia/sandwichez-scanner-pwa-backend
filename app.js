@@ -12,17 +12,18 @@ app.get('/sumar-puntos/:pass_id', async (req, res) => {
     try {
         const passUid = req.params.pass_id;
         const apiUrl = `https://app.passcreator.com/api/pass/${passUid}?zapierStyle=true`;
-        console.info(apiUrl);
         const apiKey = process.env.API_KEY;
         const storedValue = Math.floor(Math.random() * 8) + 1;
+        console.info(storedValue);
+        const data = {
+            storedValue: storedValue
+        };
 
-        const response = await axios.post(apiUrl, req.body, {
+        const response = await axios.post(apiUrl, data, {
             headers: {
                 'Authorization': apiKey,
                 'Content-Type': 'application/json'
             },
-            params: { storedValue } // Pasa el campo storedValue como parámetro
-
         });
         console.info(response.status);
         console.info(response.data);
