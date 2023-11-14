@@ -1,5 +1,6 @@
 const express = require('express');
 const axios = require('axios');
+const cors = require('cors')
 const bodyParser = require('body-parser');
 require('dotenv').config();
 
@@ -7,7 +8,7 @@ const app = express();
 const port = 3000;
 
 app.use(bodyParser.json());
-
+app.use(cors());
 app.get('/sumar-puntos/:pass_id', async (req, res) => {
     try {
         const passUid = req.params.pass_id;
