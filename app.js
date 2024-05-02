@@ -14,29 +14,51 @@ app.get('/sumar-puntos/:pass_id', async (req, res) => {
         const passUid = req.params.pass_id;
         const apiUrl = `https://app.passcreator.com/api/pass/${passUid}?zapierStyle=true`;
         const apiKey = process.env.API_KEY;
-        const storedValue = Math.floor(Math.random() * 8) + 1;
-        console.info(storedValue);
-        const data = {
-            storedValue: storedValue
-        };
+        const maxValue = 10;
 
-        const response = await axios.post(apiUrl, data, {
+        const response1 = await axios.get(apiUrl, {
             headers: {
                 'Authorization': apiKey,
                 'Content-Type': 'application/json'
             },
-        });
-        console.info(response.status);
-        console.info(response.data);
+        })
+
+        const response1Data = JSON.parse(JSON.stringify(response1.data))
+        let storedValue = response1Data.storedValue;
+        let answer
+        console.log('storedValue: ' + storedValue);
+        storedValue++
+
+        if(storedValue === 10) {
+            answer = `Éste es tu café ${storedValue} de ${maxValue}. ¡Te lo llevas gratis!`
+            storedValue = 0
+        } else {
+            answer = `Llevas ${storedValue} cafés de ${maxValue}. ¡Ya queda menos para tu café gratis!`
+        }
+
+        console.log(answer)
+        const data = {
+            storedValue: storedValue
+        };
+
+        const response2 = await axios.post(apiUrl, data, {
+            headers: {
+                'Authorization': apiKey,
+                'Content-Type': 'application/json'
+            },
+        })
+
         // Devuelve el código de estado y el cuerpo de la respuesta
-        res.status(response.status).json({
-            statusCode: response.status,
-            body: response.data
+        res.json({
+            statusCode: response2.status,
+            body: response1Data,
+            answer: answer
         });
     } catch (error) {
         console.error('Error en la llamada POST:', error.message);
+        console.log(error.message)
         // Devuelve un código de estado 500 y un mensaje de error
-        res.status(500).json({
+        res.json({
             statusCode: 500,
             body: 'Error interno del servidor'
         });
