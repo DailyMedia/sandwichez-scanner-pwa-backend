@@ -16,6 +16,7 @@ app.get('/sumar-puntos/:pass_id', async (req, res) => {
         const apiKey = process.env.API_KEY;
         const maxValue = 10;
 
+        //busca el pass en la API de PassCreator
         const response1 = await axios.get(apiUrl, {
             headers: {
                 'Authorization': apiKey,
@@ -29,6 +30,7 @@ app.get('/sumar-puntos/:pass_id', async (req, res) => {
         console.log('storedValue: ' + storedValue);
         storedValue++
 
+        //comprueba si ya lleva 10 cafes
         if(storedValue === 10) {
             answer = {
                 msg: `Éste es tu café ${storedValue} de ${maxValue}. ¡Te lo llevas gratis!`,
@@ -47,6 +49,7 @@ app.get('/sumar-puntos/:pass_id', async (req, res) => {
             storedValue: storedValue
         };
 
+        //actualiza el pass en PassCreator
         const response2 = await axios.post(apiUrl, data, {
             headers: {
                 'Authorization': apiKey,
