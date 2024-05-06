@@ -22,7 +22,7 @@ app.get('/sumar-puntos/:pass_id', async (req, res) => {
     try {
         const passUid = req.params.pass_id;
         const apiUrl = `https://app.passcreator.com/api/pass/${passUid}?zapierStyle=true`;
-        const apiKey = process.env.API_KEY;
+        const apiKey = process.env.PASSCREATOR_API_KEY;
         const maxValue = 10;
 
         //busca el pass en la API de PassCreator
