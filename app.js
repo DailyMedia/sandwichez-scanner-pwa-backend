@@ -42,14 +42,20 @@ app.get('/sumar-puntos/:pass_id', async (req, res) => {
         //comprueba si ya lleva 10 cafes
         if(storedValue === 10) {
             answer = {
-                msg: `Éste es tu café ${storedValue} de ${maxValue}. ¡Te lo llevas gratis!`,
-                countdown: 10
+                msg: `Éste es su café ${storedValue} de ${maxValue}. ¡Se lo llevas gratis!`,
+                countdown: 10,
+                achievedMaxValue: true,
+                storedValue,
+                maxValue
             }
             storedValue = 0
         } else {
             answer = {
-                msg: `Llevas ${storedValue} cafés de ${maxValue}. ¡Ya queda menos para tu café gratis!`,
-                countdown: 5
+                msg: `Lleva ${storedValue} cafés de ${maxValue}. ¡Ya queda menos para su café gratis!`,
+                countdown: 5,
+                achievedMaxValue: false,
+                storedValue,
+                maxValue
             }
         }
 
